@@ -12,5 +12,8 @@
     <Folder Include="ModuleNotes\DataLayer\EasyAppleRepositories\" />
     <Folder Include="ModuleNotes\EasyAppleCommonModel\" />
     <Folder Include="ModuleNotes\DataLayer\Repositories\" />
+    <Folder Include="ModuleNotes\BusinessLayer\" />
+    <Folder Include="ModuleNotes\BusinessLayer\EasyAppleServices\" />
+    <Folder Include="ModuleNotes\BusinessLayer\Services\" />
   </ItemGroup>
 </Project>

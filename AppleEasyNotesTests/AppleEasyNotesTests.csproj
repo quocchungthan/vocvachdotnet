@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <Folder Include="DataLayer\" />
+    <Folder Include="BusinessLayer\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EasyAppleNotes\EasyAppleNotes.csproj" />
