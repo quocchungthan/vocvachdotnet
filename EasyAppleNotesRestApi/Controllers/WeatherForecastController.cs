@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace EasyAppleNotes.Controllers
+namespace EasyAppleNotesRestApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
