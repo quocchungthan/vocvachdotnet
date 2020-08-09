@@ -5,9 +5,9 @@ using EasyAppleNotes.ModuleNotes.EasyAppleCommonModel;
 using EasyAppleNotes.ModuleNotes.DataLayer.EasyAppleRepositories;
 using EasyAppleNotes.ModuleNotes.DataLayer.Entities;
 using MongoDB.Driver;
-using System.Collections;
 using System.Linq;
 using Tag = EasyAppleNotes.ModuleNotes.EasyAppleCommonModel.Tag;
+using AutoMapper;
 using MongoDB.Bson;
 
 namespace EasyAppleNotes.ModuleNotes.DataLayer.Repositories
@@ -17,26 +17,18 @@ namespace EasyAppleNotes.ModuleNotes.DataLayer.Repositories
         private readonly IMongoCollection<NoteEntity> _notes;
         private readonly IMongoCollection<TagEntity> _tags;
 
-        public NoteRepository(INotestoreDatabaseSettings settings)
+        public NoteRepository(INotestoreDatabaseSettings settings, IMapper mapper)
             : base(settings)
         {
+            _mapper = mapper;
             _notes = _database.GetCollection<NoteEntity>(settings.CollectionNameNotes);
             _tags = _database.GetCollection<TagEntity>(settings.CollectionNameTags);
         }
         // TODO: Move this method to base and integrate MAPPERS
         public async Task<string> Store(Note note)
         {
-            var dto = new NoteEntity()
-            {
-                Id = ObjectId.GenerateNewId().ToString(),
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
-                Title = note.Title,
-                Content = note.Content,
-                IssueDate = note.IssueDate,
-                OrderIndex = note.OrderIndex,
-                TagIds = note.Tags.Select(x => new ObjectId(x.Id))
-            };
+            var dto = _mapper.Map<NoteEntity>(note);
+            dto.TagIds = note.Tags.Select(x => new ObjectId(x.Id));
 
             await _notes.InsertOneAsync(dto);
 
@@ -45,14 +37,7 @@ namespace EasyAppleNotes.ModuleNotes.DataLayer.Repositories
 
         public async Task<string> Store(Tag tag)
         {
-            var dto = new TagEntity()
-            {
-                Id = ObjectId.GenerateNewId().ToString(),
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
-                Color = tag.Color,
-                Name = tag.Name
-            };
+            var dto = _mapper.Map<TagEntity>(tag);
 
             await _tags.InsertOneAsync(dto);
 
@@ -79,31 +64,15 @@ namespace EasyAppleNotes.ModuleNotes.DataLayer.Repositories
 
         private IEnumerable<Note> MapNotes(IEnumerable<NoteEntity> notes, IEnumerable<TagEntity> tags)
         {
-            var tagModels = tags.Select(x =>
-            {
-                return new Tag()
-                {
-                    Id = x.Id,
-                    CreatedAt = x.CreatedAt,
-                    UpdatedAt = x.UpdatedAt,
-                    Name = x.Name,
-                    Color = x.Color,
-                };
-            });
+            var tagModels = tags.Select(_mapper.Map<Tag>);
 
             return notes.Select(x =>
             {
-                return new Note()
-                {
-                    Id = x.Id,
-                    CreatedAt = x.CreatedAt,
-                    UpdatedAt = x.UpdatedAt,
-                    Title = x.Title,
-                    Content = x.Content,
-                    IssueDate = x.IssueDate,
-                    OrderIndex = x.OrderIndex,
-                    Tags = x.TagIds.Select(y => tagModels.First(z => y.ToString() == z.Id))
-                };
+                var note = _mapper.Map<Note>(x);
+
+                note.Tags = x.TagIds.Select(y => tagModels.First(z => y.ToString() == z.Id));
+
+                return note;
             });
         }
     }
