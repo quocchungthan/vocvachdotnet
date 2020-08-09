@@ -8,13 +8,13 @@ using Xunit;
 namespace AppleEasyNotesTests.DataLayer
 {
 
-    public class NoteRepositoryTests:RepositoryTestsBase
+    public class NoteRepositoryTests : RepositoryTestsBase
     {
-        public readonly INoteRepository _noteRepository;
+        public readonly NoteRepository _sut;
 
         public NoteRepositoryTests():base()
         {
-            _noteRepository = new NoteRepository(_mockDbSetting.Object);
+            _sut = new NoteRepository(_mockDbSetting.Object);
         }
 
         //[Fact]
@@ -29,9 +29,20 @@ namespace AppleEasyNotesTests.DataLayer
         [Fact]
         public async void Should_Not_Throw_Not_Implemented_Exception()
         {
-            var result = await _noteRepository.GetAllNotesOrderByIssueDayThenCreatedAtThenOrderIndex();
+            var result = await _sut.GetAllNotesOrderByIssueDayThenCreatedAtThenOrderIndex();
 
             Assert.NotNull(result);
+        }
+
+        protected override void DropTempDb()
+        {
+            //throw new NotImplementedException();
+            _sut.DropDatabase();
+        }
+
+        protected override void PrepareDb()
+        {
+            //throw new NotImplementedException();
         }
     }
 }

@@ -4,7 +4,7 @@ using Moq;
 
 namespace AppleEasyNotesTests.DataLayer
 {
-    public class RepositoryTestsBase
+    public abstract class RepositoryTestsBase
     {
 
         protected readonly Mock<INotestoreDatabaseSettings> _mockDbSetting;
@@ -17,6 +17,19 @@ namespace AppleEasyNotesTests.DataLayer
             _mockDbSetting.SetupGet(x => x.DatabaseName).Returns("chunbattuTests");
             _mockDbSetting.SetupGet(x => x.CollectionNameNotes).Returns("notes");
             _mockDbSetting.SetupGet(x => x.CollectionNameTags).Returns("tags");
+
+            // CreateDb
+            PrepareDb();
         }
+
+        public void Dispose()
+        {
+            // Drop Db
+            DropTempDb();
+        }
+
+        protected abstract void DropTempDb();
+
+        protected abstract void PrepareDb();
     }
 }
