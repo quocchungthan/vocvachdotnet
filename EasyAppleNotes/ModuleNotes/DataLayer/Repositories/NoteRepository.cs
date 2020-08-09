@@ -8,6 +8,7 @@ using MongoDB.Driver;
 using System.Collections;
 using System.Linq;
 using Tag = EasyAppleNotes.ModuleNotes.EasyAppleCommonModel.Tag;
+using MongoDB.Bson;
 
 namespace EasyAppleNotes.ModuleNotes.DataLayer.Repositories
 {
@@ -21,6 +22,41 @@ namespace EasyAppleNotes.ModuleNotes.DataLayer.Repositories
         {
             _notes = _database.GetCollection<NoteEntity>(settings.CollectionNameNotes);
             _tags = _database.GetCollection<TagEntity>(settings.CollectionNameTags);
+        }
+        // TODO: Move this method to base and integrate MAPPERS
+        public async Task<string> Store(Note note)
+        {
+            var dto = new NoteEntity()
+            {
+                Id = new ObjectId().ToString(),
+                CreatedAt = new DateTime().ToUniversalTime(),
+                UpdatedAt = new DateTime().ToUniversalTime(),
+                Title = note.Title,
+                Content = note.Content,
+                IssueDate = note.IssueDate,
+                OrderIndex = note.OrderIndex,
+                TagIds = note.Tags.Select(x => new ObjectId(x.Id))
+            };
+
+            await _notes.InsertOneAsync(dto);
+
+            return dto.Id;
+        }
+
+        public async Task<string> Store(Tag tag)
+        {
+            var dto = new TagEntity()
+            {
+                Id = new ObjectId().ToString(),
+                CreatedAt = new DateTime().ToUniversalTime(),
+                UpdatedAt = new DateTime().ToUniversalTime(),
+                Color = tag.Color,
+                Name = tag.Name
+            };
+
+            await _tags.InsertOneAsync(dto);
+
+            return dto.Id;
         }
 
         public async Task<IEnumerable<Note>> GetAllNotesOrderByIssueDayThenCreatedAtThenOrderIndex()

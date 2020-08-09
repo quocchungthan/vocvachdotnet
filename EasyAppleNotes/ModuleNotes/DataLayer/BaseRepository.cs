@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using MongoDB.Driver;
 
 namespace EasyAppleNotes.ModuleNotes.DataLayer
@@ -16,7 +17,7 @@ namespace EasyAppleNotes.ModuleNotes.DataLayer
             _settings = settings;
         }
 
-        public async void DropDatabase()
+        public async Task DropDatabase()
         {
             await _client.DropDatabaseAsync(_settings.DatabaseName);
         }

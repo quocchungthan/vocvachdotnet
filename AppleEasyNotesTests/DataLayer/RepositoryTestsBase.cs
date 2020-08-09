@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using EasyAppleNotes.ModuleNotes.DataLayer;
 using Moq;
 
@@ -18,18 +19,21 @@ namespace AppleEasyNotesTests.DataLayer
             _mockDbSetting.SetupGet(x => x.CollectionNameNotes).Returns("notes");
             _mockDbSetting.SetupGet(x => x.CollectionNameTags).Returns("tags");
 
-            // CreateDb
-            PrepareDb();
+            
         }
 
-        public void Dispose()
+        public async Task InitializeAsync()
         {
-            // Drop Db
-            DropTempDb();
+            await PrepareDb();
         }
 
-        protected abstract void DropTempDb();
+        public async Task DisposeAsync()
+        {
+             await DropTempDb();
+        }
 
-        protected abstract void PrepareDb();
+        protected abstract Task DropTempDb();
+
+        protected abstract Task PrepareDb();
     }
 }

@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using EasyAppleNotes.ModuleNotes.DataLayer;
 using EasyAppleNotes.ModuleNotes.DataLayer.EasyAppleRepositories;
 using EasyAppleNotes.ModuleNotes.DataLayer.Repositories;
+using EasyAppleNotes.ModuleNotes.EasyAppleCommonModel;
 using Moq;
 using Xunit;
 
 namespace AppleEasyNotesTests.DataLayer
 {
 
-    public class NoteRepositoryTests : RepositoryTestsBase
+    public class NoteRepositoryTests : RepositoryTestsBase, IAsyncLifetime
     {
         public readonly NoteRepository _sut;
 
@@ -32,17 +35,32 @@ namespace AppleEasyNotesTests.DataLayer
             var result = await _sut.GetAllNotesOrderByIssueDayThenCreatedAtThenOrderIndex();
 
             Assert.NotNull(result);
+            Assert.Single(result);
         }
 
-        protected override void DropTempDb()
+        protected override async Task DropTempDb()
         {
             //throw new NotImplementedException();
-            _sut.DropDatabase();
+            await _sut.DropDatabase();
         }
 
-        protected override void PrepareDb()
+        protected override async Task PrepareDb()
         {
             //throw new NotImplementedException();
+            var tagId = await _sut.Store(new Tag()
+            {
+                Name = "tag1",
+                Color = "color1"
+            });
+
+            await _sut.Store(new Note()
+            {
+                Tags = new[] { new Tag() { Id = tagId } },
+                Title = "title 1",
+                Content = "content 1",
+                IssueDate = new DateTime().ToUniversalTime(),
+                OrderIndex = 0
+            });
         }
     }
 }
