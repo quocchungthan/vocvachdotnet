@@ -28,9 +28,9 @@ namespace EasyAppleNotes.ModuleNotes.DataLayer.Repositories
         {
             var dto = new NoteEntity()
             {
-                Id = new ObjectId().ToString(),
-                CreatedAt = new DateTime().ToUniversalTime(),
-                UpdatedAt = new DateTime().ToUniversalTime(),
+                Id = ObjectId.GenerateNewId().ToString(),
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
                 Title = note.Title,
                 Content = note.Content,
                 IssueDate = note.IssueDate,
@@ -47,9 +47,9 @@ namespace EasyAppleNotes.ModuleNotes.DataLayer.Repositories
         {
             var dto = new TagEntity()
             {
-                Id = new ObjectId().ToString(),
-                CreatedAt = new DateTime().ToUniversalTime(),
-                UpdatedAt = new DateTime().ToUniversalTime(),
+                Id = ObjectId.GenerateNewId().ToString(),
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
                 Color = tag.Color,
                 Name = tag.Name
             };
