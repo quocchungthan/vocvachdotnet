@@ -3,8 +3,8 @@ namespace EasyAppleNotes.ModuleNotes.EasyAppleCommonModel
 {
     public class Tag: BaseModel
     {
-        String Name { get; set; }
-        String Color { get; set; }
+        public String Name { get; set; }
+        public String Color { get; set; }
 
         public Tag()
         {

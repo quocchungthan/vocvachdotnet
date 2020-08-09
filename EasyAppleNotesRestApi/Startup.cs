@@ -28,6 +28,7 @@ namespace EasyAppleNotesRestApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.SetupDatabaseSettings(Configuration);
             services.AddRepositoryDependency();
             services.AddServiceDependency();
         }

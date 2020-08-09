@@ -16,4 +16,7 @@
     <Folder Include="ModuleNotes\BusinessLayer\EasyAppleServices\" />
     <Folder Include="ModuleNotes\BusinessLayer\Services\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.11.0" />
+  </ItemGroup>
 </Project>

@@ -6,11 +6,11 @@ namespace EasyAppleNotes.ModuleNotes.EasyAppleCommonModel
     public class Note: BaseModel
     {
 
-        DateTime IssueDate { get; set; }
-        IEnumerable<Tag> Tags { get; set; }
-        String Title { get; set; }
-        String Content { get; set; }
-        int OrderIndex { get; set; }
+        public DateTime IssueDate { get; set; }
+        public IEnumerable<Tag> Tags { get; set; }
+        public String Title { get; set; }
+        public String Content { get; set; }
+        public int OrderIndex { get; set; }
 
 
         public Note()
