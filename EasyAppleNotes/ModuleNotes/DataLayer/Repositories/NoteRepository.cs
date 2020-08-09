@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using EasyAppleNotes.ModuleNotes.CommonModel;
+using EasyAppleNotes.ModuleNotes.EasyAppleCommonModel;
 using EasyAppleNotes.ModuleNotes.DataLayer.EasyAppleRepositories;
 
 namespace EasyAppleNotes.ModuleNotes.DataLayer.Repositories
