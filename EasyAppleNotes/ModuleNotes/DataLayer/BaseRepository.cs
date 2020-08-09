@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using MongoDB.Driver;
 
 namespace EasyAppleNotes.ModuleNotes.DataLayer
@@ -9,6 +10,7 @@ namespace EasyAppleNotes.ModuleNotes.DataLayer
         protected readonly MongoClient _client;
         protected readonly IMongoDatabase _database;
         private readonly INotestoreDatabaseSettings _settings;
+        protected IMapper _mapper;
 
         public BaseRepository(INotestoreDatabaseSettings settings)
         {

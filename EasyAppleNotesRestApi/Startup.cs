@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using EasyAppleNotes.ModuleNotes.BusinessLayer;
 using EasyAppleNotes.ModuleNotes.DataLayer;
+using EasyAppleNotes.ModuleNotes.DataLayer.Mappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +30,7 @@ namespace EasyAppleNotesRestApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddAutoMapper(c => c.AddProfile<MapperProfile>(), typeof(Startup));
             services.SetupDatabaseSettings(Configuration);
             services.AddRepositoryDependency();
             services.AddServiceDependency();
