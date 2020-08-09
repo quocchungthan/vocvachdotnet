@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <Folder Include="ModuleNotes\" />
+    <Folder Include="ModuleNotes\DataLayer\" />
+    <Folder Include="ModuleNotes\DataLayer\Entities\" />
+    <Folder Include="ModuleNotes\DataLayer\EasyAppleRepositories\" />
+    <Folder Include="ModuleNotes\EasyAppleCommonModel\" />
+    <Folder Include="ModuleNotes\DataLayer\Repositories\" />
+    <Folder Include="ModuleNotes\Tests\" />
+    <Folder Include="ModuleNotes\Tests\DataLayer\" />
+  </ItemGroup>
+</Project>
