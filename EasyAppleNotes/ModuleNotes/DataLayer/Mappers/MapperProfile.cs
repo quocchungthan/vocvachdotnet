@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AutoMapper;
 using EasyAppleNotes.ModuleNotes.DataLayer.Entities;
 using EasyAppleNotes.ModuleNotes.EasyAppleCommonModel;
@@ -14,7 +15,11 @@ namespace EasyAppleNotes.ModuleNotes.DataLayer.Mappers
             CreateGetMapper<NoteEntity, Note>();
 
             CreateStoreMapper<Tag, TagEntity>();
-            CreateStoreMapper<Note, NoteEntity>();
+            CreateStoreMapper<Note, NoteEntity>()
+                .AfterMap((s, d) =>
+                {
+                    d.TagIds = s.Tags?.Select(x => new ObjectId(x.Id));
+                });
         }
 
         private IMappingExpression<TSource, TDestination>  CreateStoreMapper<TSource, TDestination>()

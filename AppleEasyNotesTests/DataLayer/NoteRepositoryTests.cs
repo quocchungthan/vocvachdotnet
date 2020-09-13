@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using EasyAppleNotes.ModuleNotes.DataLayer;
-using EasyAppleNotes.ModuleNotes.DataLayer.EasyAppleRepositories;
 using EasyAppleNotes.ModuleNotes.DataLayer.Entities;
 using EasyAppleNotes.ModuleNotes.DataLayer.Repositories;
 using EasyAppleNotes.ModuleNotes.EasyAppleCommonModel;
@@ -85,7 +82,7 @@ namespace AppleEasyNotesTests.DataLayer
                 .Returns(expectedStoredTag);
 
             //throw new NotImplementedException();
-            var tagId = await _sut.Store(new Tag()
+            var tagId = await _sut.StoreTag(new Tag()
             {
                 Name = "tag1",
                 Color = "color1"

@@ -8,11 +8,10 @@ using MongoDB.Driver;
 using System.Linq;
 using Tag = EasyAppleNotes.ModuleNotes.EasyAppleCommonModel.Tag;
 using AutoMapper;
-using MongoDB.Bson;
 
 namespace EasyAppleNotes.ModuleNotes.DataLayer.Repositories
 {
-    public class NoteRepository: BaseRepository, INoteRepository
+    public class NoteRepository : BaseRepository<NoteEntity>, INoteRepository
     {
         private readonly IMongoCollection<NoteEntity> _notes;
         private readonly IMongoCollection<TagEntity> _tags;
@@ -21,28 +20,11 @@ namespace EasyAppleNotes.ModuleNotes.DataLayer.Repositories
             : base(settings)
         {
             _mapper = mapper;
-            _notes = _database.GetCollection<NoteEntity>(settings.CollectionNameNotes);
-            _tags = _database.GetCollection<TagEntity>(settings.CollectionNameTags);
-        }
-        // TODO: Move this method to base and integrate MAPPERS
-        public async Task<string> Store(Note note)
-        {
-            var dto = _mapper.Map<NoteEntity>(note);
-            dto.TagIds = note.Tags.Select(x => new ObjectId(x.Id));
-
-            await _notes.InsertOneAsync(dto);
-
-            return dto.Id;
+            _notes = GetCollection<NoteEntity>();
+            _tags = GetCollection<TagEntity>();
         }
 
-        public async Task<string> Store(Tag tag)
-        {
-            var dto = _mapper.Map<TagEntity>(tag);
-
-            await _tags.InsertOneAsync(dto);
-
-            return dto.Id;
-        }
+        public Task<string> StoreTag(Tag tag) => Store<TagEntity, Tag>(tag);
 
         public async Task<IEnumerable<Note>> GetAllNotesOrderByIssueDayThenCreatedAtThenOrderIndex()
         {

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using EasyAppleNotes.ModuleNotes.DataLayer.EasyAppleDecorators;
+using EasyAppleNotes.ModuleNotes.DataLayer.Entities;
 using MongoDB.Driver;
 
 namespace EasyAppleNotes.ModuleNotes.DataLayer
 {
-    public class BaseRepository
+    public class BaseRepository<TEntity>
+            where TEntity : BaseEntity
     {
         protected readonly MongoClient _client;
         protected readonly IMongoDatabase _database;
@@ -23,5 +26,24 @@ namespace EasyAppleNotes.ModuleNotes.DataLayer
         {
             await _client.DropDatabaseAsync(_settings.DatabaseName);
         }
+
+
+        protected IMongoCollection<T> GetCollection<T>()
+        {
+            return _database.GetCollection<T>(CollectionName.GetCollectionName(typeof(T)));
+        }
+
+        public Task<string> Store<TModel>(TModel note) => Store<TEntity, TModel>(note);
+
+        public async Task<string> Store<TInput, TModel>(TModel note)
+            where TInput : BaseEntity
+        {
+            var dto = _mapper.Map<TInput>(note);
+
+            await GetCollection<TInput>().InsertOneAsync(dto);
+
+            return dto.Id;
+        }
+
     }
 }

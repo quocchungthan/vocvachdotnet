@@ -8,7 +8,7 @@ namespace EasyAppleNotes.ModuleNotes.DataLayer.Entities
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public String Id { get; set; }
+        public string Id { get; set; }
 
         [BsonElement("createdAt")]
         public DateTime CreatedAt { get; set; }
