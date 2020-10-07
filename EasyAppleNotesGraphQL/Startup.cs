@@ -1,17 +1,17 @@
 using System;
-using AutoMapper;
-using EasyAppleNotes.ModuleNotes.BusinessLayer;
-using EasyAppleNotes.ModuleNotes.DataLayer;
-using EasyAppleNotes.ModuleNotes.DataLayer.Mappers;
-using EasyAppleNotesGraphQL.Collector;
-using EasyAppleNotesGraphQL.Schemas;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-namespace EasyAppleNotesRestApi
+namespace EasyAppleNotesGraphQL
 {
     public class Startup
     {
@@ -26,11 +26,6 @@ namespace EasyAppleNotesRestApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.CollectQuery();
-            services.AddAutoMapper(c => c.AddProfile<MapperProfile>(), typeof(Startup));
-            services.SetupDatabaseSettings(Configuration);
-            services.AddRepositoryDependency();
-            services.AddServiceDependency();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,8 +41,6 @@ namespace EasyAppleNotesRestApi
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.UseGraphQL<EasyAppleNotesSchema>();
 
             app.UseEndpoints(endpoints =>
             {
