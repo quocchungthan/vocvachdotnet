@@ -10,6 +10,7 @@ namespace EasyAppleNotesGraphQL.PrototypeAppleNotes.Types
     {
         public SearchNoteType()
         {
+            Name = nameof(SearchNoteType);
             Field<NoteType>(
               "note",
               arguments: new QueryArguments(
@@ -20,7 +21,7 @@ namespace EasyAppleNotesGraphQL.PrototypeAppleNotes.Types
                   var id = context.GetArgument<string>("id");
                   return new Note()
                   {
-                      Id = Guid.NewGuid().ToString(),
+                      Id = id,
                       Content = "Text xxx"
                   };
               },

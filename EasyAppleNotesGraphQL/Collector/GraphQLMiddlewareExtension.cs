@@ -62,7 +62,7 @@ namespace EasyAppleNotesGraphQL.Collector
             });
 
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = result.Errors.Any() ? int.Parse(result.Errors.First()?.Code) : (int)HttpStatusCode.OK;
+            context.Response.StatusCode = result.Errors?.Any() == true ? int.Parse(result.Errors.First()?.Code) : (int)HttpStatusCode.OK;
             await context.Response.WriteAsync(await _writer.WriteToStringAsync(result));
         }
 
@@ -82,7 +82,7 @@ namespace EasyAppleNotesGraphQL.Collector
 
         public JObject Variables
         {
-            get => _variables ?? new JObject(new { });
+            get => _variables ?? new JObject();
             set => _variables = value;
         }
 
