@@ -9,5 +9,8 @@
     <ProjectReference Include="..\EasyAppleNotes\EasyAppleNotes.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\EasyAppleNotesGraphQL\EasyAppleNotesGraphQL.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>
