@@ -17,7 +17,6 @@ namespace EasyAppleNotesGraphQL.Collector
             services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
             services.AddSingleton<IDocumentWriter, DocumentWriter>();
             // Singleton - create only one instance for every use
-            services.AddScoped<IServiceProvider, DefaultServiceProvider>();
             // Transient - create new instance whenever the type was invoked
             services.AddTransient<NoteType>();
             services.AddTransient<SearchNoteType>();
