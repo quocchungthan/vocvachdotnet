@@ -11,6 +11,10 @@ namespace EasyAppleNotes.ModuleNotes.DataLayer
     {
         public static void AddRepositoryDependency(this IServiceCollection repo)
         {
+            // Should move this collection to startup project therefore it can dedicate what kind of api / db that it needs
+            // Add scoped: one instance for one scoped - multiple call
+            // Add singleton: one instance for whole process
+            // Add transient: one instance for one injection
             repo.AddScoped<INoteRepository, NoteRepository>();
         }
 
