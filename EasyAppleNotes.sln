@@ -1,13 +1,16 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAppleNotes", "EasyAppleNotes\EasyAppleNotes.csproj", "{243E9DBE-CE62-49D4-B62C-69735BCB55E1}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30517.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyAppleNotes", "EasyAppleNotes\EasyAppleNotes.csproj", "{243E9DBE-CE62-49D4-B62C-69735BCB55E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppleEasyNotesTests", "AppleEasyNotesTests\AppleEasyNotesTests.csproj", "{C34DE061-24FA-40AC-B925-A2073FF5F5E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppleEasyNotesTests", "AppleEasyNotesTests\AppleEasyNotesTests.csproj", "{C34DE061-24FA-40AC-B925-A2073FF5F5E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAppleNotesRestApi", "EasyAppleNotesRestApi\EasyAppleNotesRestApi.csproj", "{E3A85F9E-F7A7-4F7D-B137-F0EE3297BF97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyAppleNotesRestApi", "EasyAppleNotesRestApi\EasyAppleNotesRestApi.csproj", "{E3A85F9E-F7A7-4F7D-B137-F0EE3297BF97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAppleNotesGraphQL", "EasyAppleNotesGraphQL\EasyAppleNotesGraphQL.csproj", "{26EAF2F2-3183-4D86-AAB8-A73A1401AB67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyAppleNotesGraphQL", "EasyAppleNotesGraphQL\EasyAppleNotesGraphQL.csproj", "{26EAF2F2-3183-4D86-AAB8-A73A1401AB67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyEntityFramework", "EasyEntityFramework\EasyEntityFramework.csproj", "{AD7E043F-D148-4C57-B3E2-14215CB72A5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,5 +34,15 @@ Global
 		{26EAF2F2-3183-4D86-AAB8-A73A1401AB67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26EAF2F2-3183-4D86-AAB8-A73A1401AB67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26EAF2F2-3183-4D86-AAB8-A73A1401AB67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD7E043F-D148-4C57-B3E2-14215CB72A5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD7E043F-D148-4C57-B3E2-14215CB72A5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD7E043F-D148-4C57-B3E2-14215CB72A5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD7E043F-D148-4C57-B3E2-14215CB72A5D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BE123EC0-7BA7-43CD-A966-15EE0F7BAE32}
 	EndGlobalSection
 EndGlobal
