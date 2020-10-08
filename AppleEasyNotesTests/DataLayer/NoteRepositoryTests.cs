@@ -30,8 +30,8 @@ namespace AppleEasyNotesTests.DataLayer
         //        await _noteRepository.GetAllNotesOrderByIssueDayThenCreatedAtThenOrderIndex();
         //    });
         //}
-
-        [Fact]
+        // Should move this test to DataLayer Project
+        //[Fact]
         public async void Should_Not_Throw_Not_Implemented_Exception()
         {
             var expectedStoredTag = new Tag()
