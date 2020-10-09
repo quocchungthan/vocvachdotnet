@@ -7,7 +7,7 @@ console.log('This tool provides code generating features: code dotnet & angular 
 async function bootstrapping(): Promise<number> {
     await configService.loadConfigAsync();
     const input1 = angularHtmlElementService.createInputTextForm();
-    await fileWritingService.forceWriteFile("ignored/dist/index.html", input1);
+    await fileWritingService.forceWriteFile("index.html", input1);
     return 0;
 }
 

@@ -1,8 +1,9 @@
 import * as fs from 'fs';
+import { configService } from '../Configurations/ConfigService';
 
 class FileWritingService {
     public async forceWriteFile(fileName: string, fileContent: string): Promise<void> {
-        await this.writeFileAsync(fileName, fileContent);
+        await this.writeFileAsync(configService.Config.path + fileName, fileContent);
     }
 
     private async writeFileAsync(fileName: string, fileContent: string): Promise<void> {
