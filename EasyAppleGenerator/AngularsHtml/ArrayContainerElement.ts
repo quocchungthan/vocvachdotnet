@@ -26,9 +26,7 @@ export class ArrayContainerElement extends SuperContainerElement {
   protected calculating() {
     const actualName = this.name.replace(/[\[\]]/gi, "");
     if (this.isSubContainer(actualName)) {
-      this.innerHTML = [
-        new ContainerElement(this.schema, actualName, this.label),
-      ];
+      this.innerHTML = [new ContainerElement(this.schema, actualName, null)];
     }
 
     if (this.isEnumSelection(actualName)) {

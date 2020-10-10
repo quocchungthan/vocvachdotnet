@@ -10,7 +10,18 @@ import { DataSelectElement } from "../AngularsHtml/DataSelect";
 import { EnumSelect } from "../AngularsHtml/EnumSelect";
 import { TextElement } from "../AngularsHtml/TextElement";
 
-class AngularGenerator {
+export interface IHtmlGenerator {
+  generateComponentAsync(model: ICalcOutput): Promise<number>;
+  build(model: ICalcOutput): string;
+  buildContainerElement(model: ContainerElement): string;
+  buildArrayContainerElement(model: ArrayContainerElement): string;
+  buildEnumSelect(model: EnumSelect): string;
+  buildDataSelectElement(model: DataSelectElement): string;
+  buildTextElement(model: TextElement): string;
+  createSuperContainer(inner: string): string;
+}
+
+class AngularGenerator implements IHtmlGenerator {
   public generateComponentAsync(model: ICalcOutput): Promise<number> {
     const pathx = configService.Config.typechan.projectDir;
     const module = configService.Config.typechan.module;
@@ -85,18 +96,42 @@ class AngularGenerator {
     return "";
   }
 
-  private buildContainerElement(model: ContainerElement): string {
+  public buildContainerElement(model: ContainerElement): string {
     const label = createHtmlElement({
       name: "h4",
       html: model.label,
     });
-    const objects = model.innerHTML.map((x) => this.build(x));
+    const objects = model.innerHTML
+      .map((x) => {
+        if (
+          x instanceof ArrayContainerElement ||
+          x instanceof ContainerElement
+        ) {
+          return null;
+        }
+        return this.build(x);
+      })
+      .filter((x) => x);
+    const objectContainers = model.innerHTML
+      .map((x) => {
+        if (
+          x instanceof ArrayContainerElement ||
+          x instanceof ContainerElement
+        ) {
+          return this.build(x);
+        }
+        return null;
+      })
+      .filter((x) => x);
 
     return createHtmlElement({
       name: "div",
+      attributes: {
+        class: "mt-1",
+      },
       html:
-        "\n" +
-        label +
+        createHtmlElement({ name: "hr" }) +
+        (model.label ? "\n" + label : "") +
         "\n" +
         createHtmlElement({
           name: "div",
@@ -105,161 +140,109 @@ class AngularGenerator {
           },
           html: objects.join("\n"),
         }) +
+        "\n" +
+        objectContainers +
         "\n",
     });
   }
 
-  private buildArrayContainerElement(model: ArrayContainerElement): string {
+  public buildArrayContainerElement(model: ArrayContainerElement): string {
     const input = createHtmlElement({
-      name: "button",
-      html: "One more line",
+      name: "div",
+      attributes: {
+        class: "pt-2 pb-2",
+      },
+      html: createHtmlElement({
+        name: "app-button",
+        attributes: {
+          label: model.label + "+",
+        },
+      }),
     });
-    const label = createHtmlElement({
-      name: "label",
-      html: model.label,
-    });
-    const object = this.build(model.innerHTML[0]);
+    let object = this.build(model.innerHTML[0]);
+
+    if (
+      !(
+        model.innerHTML[0] instanceof ContainerElement ||
+        model.innerHTML[0] instanceof ArrayContainerElement
+      )
+    ) {
+      object = createHtmlElement({
+        name: "div",
+        attributes: {
+          class: "row",
+        },
+        html: object,
+      });
+    }
 
     return createHtmlElement({
       name: "div",
       attributes: {
-        class: "pt-2",
+        class: "",
       },
-      html: "\n" + label + "\n" + object + "\n" + input + "\n",
+      html: "\n" + object + "\n" + input + "\n",
     });
   }
 
-  /**
-   * 
-   * 
-   * <div class="slds-grid slds-grid_pull-padded slds-grid_vertical-align-center slds-m-top_large">
-  <div class="slds-col_padded">
-    <ngl-select label="Select Label" fieldLevelHelpTooltip="Some helpful information" [error]="hasError ? error : null">
-      <select ngl [required]="required" [disabled]="disabled">
-        <option value="">Please select</option>
-        <option>Option One</option>
-        <option>Option Two</option>
-        <option>Option Three</option>
-      </select>
-    </ngl-select>
-  </div>
-</div>
-   */
-
-  private buildEnumSelect(model: EnumSelect): string {
+  public buildEnumSelect(model: EnumSelect): string {
     const optionKeys = Object.keys(model.options);
-    const options = optionKeys.map((k) => {
-      return createHtmlElement({
-        name: "option",
-        attributes: {
-          value: k,
-        },
-        html: model.options[k],
-      });
-    });
+    const options = optionKeys.map((k) => ({
+      key: k,
+      value: model.options[k],
+    }));
 
     const input = createHtmlElement({
-      name: "select",
-      attributes: {
-        ngl: true,
-      },
-      html: "\n" + options.join("\n") + "\n",
-    });
-
-    const nglSelect = createHtmlElement({
-      name: "ngl-select",
+      name: "app-select",
       attributes: {
         label: model.label,
-        fieldLevelHelpTooltip: "Some helpful information",
+        options: JSON.stringify(options),
       },
-      html: "\n" + input + "\n",
     });
 
-    const innerdiv = createHtmlElement({
-      name: "div",
-      attributes: {
-        class: "slds-col_padded",
-      },
-      html: "\n" + nglSelect + "\n",
-    });
-
-    const wrapper = createHtmlElement({
-      name: "div",
-      attributes: {
-        class:
-          "slds-grid slds-grid_pull-padded slds-grid_vertical-align-center slds-m-top_large",
-      },
-      html: "\n" + innerdiv + "\n",
-    });
     return createHtmlElement({
       name: "div",
       attributes: {
         class: "col-" + model.size,
       },
-      html: "\n" + wrapper + "\n",
+      html: "\n" + input + "\n",
     });
   }
 
-  private buildDataSelectElement(model: DataSelectElement): string {
+  public buildDataSelectElement(model: DataSelectElement): string {
     const input = createHtmlElement({
-      name: "button",
-      html: "Search object",
+      name: "div",
+      html: createHtmlElement({
+        name: "app-button",
+        attributes: {
+          label: "Search object",
+        },
+      }),
     });
     const label = createHtmlElement({
       name: "label",
+      attributes: {
+        class: "slds-form-element__label",
+      },
       html: model.label,
     });
 
     return createHtmlElement({
       name: "div",
       attributes: {
-        class: "pt-2",
+        class: "col-3 slds-m-top--large",
       },
+      // html: "\n" + input" + "\n",
       html: "\n" + label + "\n" + input + "\n",
     });
   }
 
-  /**
-   * 
-   * <div class="slds-col_padded">
-      <ngl-input label="Input Label" fieldLevelHelpTooltip="Some helpful information" [error]="hasError ? error : null">
-        <input ngl type="input" [required]="required" [disabled]="disabled" placeholder="Placeholder Text">
-      </ngl-input>
-    </div>
-   */
-  private buildTextElement(model: TextElement): string {
-    const input = createHtmlElement({
-      name: "input",
-      attributes: {
-        ngl: true,
-        type: "input",
-        placeHolder: "Placeholder Text",
-      },
-    });
-    const label = createHtmlElement({
-      name: "ngl-input",
+  public buildTextElement(model: TextElement): string {
+    const wrapper = createHtmlElement({
+      name: "app-text-input",
       attributes: {
         label: model.label,
-        fieldLevelHelpTooltip: "Some helpful information",
       },
-      html: "\n" + input + "\n",
-    });
-
-    const innerdiv = createHtmlElement({
-      name: "div",
-      attributes: {
-        class: "slds-col_padded",
-      },
-      html: "\n" + label + "\n",
-    });
-
-    const wrapper = createHtmlElement({
-      name: "div",
-      attributes: {
-        class:
-          "slds-grid slds-grid_pull-padded slds-grid_vertical-align-center slds-m-top_large",
-      },
-      html: "\n" + innerdiv + "\n",
     });
     return createHtmlElement({
       name: "div",
