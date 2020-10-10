@@ -6,7 +6,7 @@ interface KeyValues {
 
 export class EnumSelect extends Element {
   private schema: string;
-  private options: KeyValues = {};
+  public options: KeyValues = {};
   constructor(schema: string, name?: string, label?: string) {
     super();
     this.name = name;

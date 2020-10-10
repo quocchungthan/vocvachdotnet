@@ -1,5 +1,8 @@
 import createHtmlElement = require("create-html-element");
 import { create } from "domain";
+import { EnumSelect } from "./EnumSelect";
+import { ICalcOutput } from "./ICalcOutput";
+import { TextElement } from "./TextElement";
 
 /**
  * 
@@ -110,6 +113,90 @@ class AngularsHtmlElementService {
         "*ifDirective": true,
       },
       html: "ecec",
+    });
+  }
+
+  public build(model: ICalcOutput): string {
+    if (model instanceof TextElement) {
+      return this.buildTextElement(model);
+    }
+    if (model instanceof EnumSelect) {
+      return this.buildEnumSelect(model);
+    }
+
+    return "";
+  }
+
+  private buildEnumSelect(model: EnumSelect): string {
+    const optionKeys = Object.keys(model.options);
+    const options = optionKeys.map((k) => {
+      return createHtmlElement({
+        name: "option",
+        attributes: {
+          value: k,
+        },
+        html: model.options[k],
+      });
+    });
+
+    const input = createHtmlElement({
+      name: "select",
+      html: "\n" + options.join("\n") + "\n",
+    });
+
+    const label = createHtmlElement({
+      name: "label",
+      html: model.label,
+    });
+
+    return createHtmlElement({
+      name: "div",
+      attributes: {
+        class: "pt-2",
+      },
+      html: "\n" + label + "\n" + input + "\n",
+    });
+  }
+
+  private buildTextElement(model: TextElement): string {
+    const input = createHtmlElement({
+      name: "input",
+    });
+    const label = createHtmlElement({
+      name: "label",
+      html: model.label,
+    });
+
+    return createHtmlElement({
+      name: "div",
+      attributes: {
+        class: "pt-2",
+      },
+      html: "\n" + label + "\n" + input + "\n",
+    });
+  }
+
+  public createSuperContainer(inner: string): string {
+    var col12 = createHtmlElement({
+      name: "div",
+      attributes: {
+        class: "col-12",
+      },
+      html: inner,
+    });
+    var row = createHtmlElement({
+      name: "div",
+      attributes: {
+        class: "row",
+      },
+      html: "\n" + col12 + "\n",
+    });
+    return createHtmlElement({
+      name: "div",
+      attributes: {
+        class: "container",
+      },
+      html: "\n" + row + "\n",
     });
   }
 }
