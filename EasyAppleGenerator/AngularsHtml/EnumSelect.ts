@@ -17,6 +17,22 @@ export class EnumSelect extends Element {
     delete this.schema;
   }
   private calculating() {
-    // find options here
+    for (const f of this.getFormFieldsAsStringsByName(this.name)) {
+      this.options[f] = this.toLabel(f).toLocaleLowerCase();
+    }
+  }
+
+  private getFormFieldsAsStringsByName(name: string): string[] {
+    const formPattern = new RegExp(
+      "enum " + name.replace(/[\[\]]/gi, "") + " {([^{}]+)}",
+      "gi"
+    );
+    const matches = this.collectMatchs(this.schema, formPattern)?.[0];
+
+    if (!matches) {
+      return null;
+    }
+
+    return matches.split("\n").filter(this.notSpacesOnly);
   }
 }

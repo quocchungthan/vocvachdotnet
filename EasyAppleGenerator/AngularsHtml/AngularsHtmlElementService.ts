@@ -1,5 +1,8 @@
 import createHtmlElement = require("create-html-element");
 import { create } from "domain";
+import { ArrayContainerElement } from "./ArrayContainerElement";
+import { ContainerElement } from "./ContainerElement";
+import { DataSelectElement } from "./DataSelect";
 import { EnumSelect } from "./EnumSelect";
 import { ICalcOutput } from "./ICalcOutput";
 import { TextElement } from "./TextElement";
@@ -116,6 +119,7 @@ class AngularsHtmlElementService {
     });
   }
 
+  // these building methods should be interfaces, implementation will be located in specific projects
   public build(model: ICalcOutput): string {
     if (model instanceof TextElement) {
       return this.buildTextElement(model);
@@ -123,8 +127,53 @@ class AngularsHtmlElementService {
     if (model instanceof EnumSelect) {
       return this.buildEnumSelect(model);
     }
+    if (model instanceof DataSelectElement) {
+      return this.buildDataSelectElement(model);
+    }
+    if (model instanceof ContainerElement) {
+      return this.buildContainerElement(model);
+    }
+    if (model instanceof ArrayContainerElement) {
+      return this.buildArrayContainerElement(model);
+    }
 
     return "";
+  }
+
+  private buildContainerElement(model: ContainerElement): string {
+    const label = createHtmlElement({
+      name: "h4",
+      html: model.label,
+    });
+    const objects = model.innerHTML.map((x) => this.build(x));
+
+    return createHtmlElement({
+      name: "div",
+      attributes: {
+        class: "pt-2",
+      },
+      html: "\n" + label + "\n" + objects.join("\n") + "\n",
+    });
+  }
+
+  private buildArrayContainerElement(model: ArrayContainerElement): string {
+    const input = createHtmlElement({
+      name: "button",
+      html: "One more line",
+    });
+    const label = createHtmlElement({
+      name: "label",
+      html: model.label,
+    });
+    const object = this.build(model.innerHTML[0]);
+
+    return createHtmlElement({
+      name: "div",
+      attributes: {
+        class: "pt-2",
+      },
+      html: "\n" + label + "\n" + object + "\n" + input + "\n",
+    });
   }
 
   private buildEnumSelect(model: EnumSelect): string {
@@ -144,6 +193,25 @@ class AngularsHtmlElementService {
       html: "\n" + options.join("\n") + "\n",
     });
 
+    const label = createHtmlElement({
+      name: "label",
+      html: model.label,
+    });
+
+    return createHtmlElement({
+      name: "div",
+      attributes: {
+        class: "pt-2",
+      },
+      html: "\n" + label + "\n" + input + "\n",
+    });
+  }
+
+  private buildDataSelectElement(model: DataSelectElement): string {
+    const input = createHtmlElement({
+      name: "button",
+      html: "Search object",
+    });
     const label = createHtmlElement({
       name: "label",
       html: model.label,

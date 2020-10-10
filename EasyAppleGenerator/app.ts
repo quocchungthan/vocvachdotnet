@@ -11,9 +11,9 @@ console.log(
 async function bootstrapping(): Promise<number> {
   await configService.loadConfigAsync(__dirname);
   const calculated = calculatingService.seperatedCalculation();
-  const html = angularHtmlElementService.initHtmlPage(
-    JSON.stringify(calculated)
-  );
+  const input = angularHtmlElementService.build(calculated);
+  const container = angularHtmlElementService.createSuperContainer(input);
+  const html = angularHtmlElementService.initHtmlPage(container);
   await fileWritingService.forceWriteFile("index.html", html);
   return 0;
 }

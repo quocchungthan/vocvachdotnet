@@ -52,7 +52,7 @@ const sampleInput = `
 
 class CalculationService {
   public seperatedCalculation(schema: string = sampleInput) {
-    return new ContainerElement(schema);
+    return new ContainerElement(schema, null, "Generated Form");
   }
 }
 

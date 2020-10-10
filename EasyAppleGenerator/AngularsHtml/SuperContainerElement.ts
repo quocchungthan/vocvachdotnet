@@ -23,21 +23,6 @@ export abstract class SuperContainerElement extends Element {
   protected calculating(): void {
     const fields = this.getFormFieldsAsStringsByName(this.name);
     this.innerHTML = fields.map((x) => this.child(x)).filter((x) => x);
-
-    // if (fields != null) {
-    //   const result: ICalcOutput = {
-    //     type: "container",
-    //     innerHTML: fields
-    //       .map((x) => this.calculatingByFieldName(schema, x))
-    //       .filter((x) => x),
-    //   };
-    //   return result;
-    // } else {
-    //   const result: ICalcOutput = {
-    //     type: "select",
-    //   };
-    //   return result;
-    // }
   }
 
   private child(field: string): ICalcOutput {
@@ -48,7 +33,6 @@ export abstract class SuperContainerElement extends Element {
       // Id should not be showed on forms
       return null;
     }
-    // text box
     if (fieldType === "String") {
       return new TextElement(fieldName);
     }
@@ -58,15 +42,15 @@ export abstract class SuperContainerElement extends Element {
     }
 
     if (this.isSubContainer(fieldType)) {
-      return this.seftNew(this.schema, fieldType, fieldName);
+      return this.seftNew(this.schema, fieldType, this.toLabel(fieldName));
     }
 
     if (this.isEnumSelection(fieldType)) {
-      return new EnumSelect(this.schema, fieldType, fieldName);
+      return new EnumSelect(this.schema, fieldType, this.toLabel(fieldName));
     }
 
     if (this.isArray(fieldType)) {
-      return this.seftNewArray(this.schema, fieldType, fieldName);
+      return this.seftNewArray(this.schema, fieldType, this.toLabel(fieldName));
     }
 
     console.log(
@@ -106,41 +90,11 @@ export abstract class SuperContainerElement extends Element {
     name: string
   ): SuperContainerElement;
 
-  //   private calculatingByFieldName(
-  //     schema: string,
-  //     fieldSchema: string
-  //   ): ICalcOutput {
-  //     const fieldPattern = /(\w+)\: (\w+|\[\w+\])(\!?)( = (\w+))?/gi;
-  //     const matches = fieldPattern.exec(fieldSchema);
-
-  //     // Id should not be showed on forms
-  //     if (!matches || matches[1] == "id") {
-  //       return null;
-  //     }
-
-  //     const controlType = this.getControlType(matches[2]);
-
-  //     if (controlType === "container" || controlType === "array") {
-  //       const calculated = this.calculatingByInputName(schema, matches[2]);
-  //       return {
-  //         ...calculated,
-  //         label: this.toLabel(matches[1]),
-  //         type: calculated.type === "select" ? calculated.type : controlType,
-  //       };
-  //     }
-
-  //     return {
-  //       type: this.getControlType(matches[2]),
-  //       label: this.toLabel(matches[1]),
-  //     };
-  //   }
-
   private getFormFieldsAsStringsByName(name: string): string[] {
     const formPattern = new RegExp(
       "input " + name.replace(/[\[\]]/gi, "") + " {([^{}]+)}",
       "gi"
     );
-    // const enumPattern = new RegExp("enum " + name + " {([^{}]+)}", "gi");
     const matches = this.collectMatchs(this.schema, formPattern)?.[0];
 
     if (!matches) {
