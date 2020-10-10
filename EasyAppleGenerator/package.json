@@ -8,10 +8,15 @@
   },
   "scripts": {
     "build": "tsc --build",
+    "start": "ts-node app",
     "clean": "tsc --build --clean"
   },
   "devDependencies": {
     "@types/node": "^8.0.14",
     "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "create-html-element": "^3.0.0",
+    "read-config-file": "^6.0.0"
   }
 }

@@ -1,3 +1,5 @@
+EasyAppleGenerator/ignored/
+EasyAppleGenerator/project-configuration.json
 # globs
 Makefile.in
 *.userprefs
