@@ -18,6 +18,6 @@ export class ContainerElement extends SuperContainerElement {
   }
   constructor(schema: string, name?: string, label?: string) {
     super(schema, name, label);
-    this.type = "array";
+    this.type = "container";
   }
 }
