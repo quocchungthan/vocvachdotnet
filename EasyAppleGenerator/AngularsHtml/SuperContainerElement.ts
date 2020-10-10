@@ -50,7 +50,7 @@ export abstract class SuperContainerElement extends Element {
     }
 
     if (this.isArray(fieldType)) {
-      return this.seftNewArray(this.schema, fieldType, this.toLabel(fieldName));
+      return this.seftNewArray(this.schema, fieldType, fieldName);
     }
 
     console.log(

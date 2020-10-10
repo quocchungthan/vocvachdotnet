@@ -51,8 +51,27 @@ const sampleInput = `
   }`;
 
 class CalculationService {
-  public seperatedCalculation(schema: string = sampleInput) {
-    return new ContainerElement(schema, null, "Generated Form");
+  public seperatedCalculation(schema: string = sampleInput): ICalcOutput[] {
+    // many entries in one schema and we should consider by Mutation, not type dependency
+    return this.findEntriesInputSchema(schema).map(
+      (v, i) => new ContainerElement(schema, v, "Generated Form " + i)
+    );
+  }
+
+  // Cloned from Container Element
+  private findEntriesInputSchema(schema: string): string[] {
+    const pattern = /input (\w+) \{/gi;
+    const formPattern = /input \w+ \{([^{}]+)\}/gi;
+    const inputNames = this.collectMatchs(schema, pattern);
+    const inputForms = this.collectMatchs(schema, formPattern);
+    // It's business
+    return inputNames.filter(
+      (name) => !inputForms.find((form) => form.includes(name))
+    );
+  }
+
+  private collectMatchs(input: string, pattern: RegExp): string[] {
+    return input.match(pattern)?.map((x) => x.replace(pattern, "$1"));
   }
 }
 
