@@ -1,4 +1,5 @@
 import { angularHtmlElementService } from "./AngularsHtml/AngularsHtmlElementService";
+import { calculatingService } from "./AngularsHtml/CalculatingService";
 import { configService } from "./Configurations/ConfigService";
 import { fileWritingService } from "./FileIO/FileWritingService";
 
@@ -9,8 +10,11 @@ console.log(
 
 async function bootstrapping(): Promise<number> {
   await configService.loadConfigAsync(__dirname);
-  const input1 = angularHtmlElementService.createInputTextForm();
-  await fileWritingService.forceWriteFile("index.html", input1);
+  const calculated = calculatingService.seperatedCalculation();
+  const html = angularHtmlElementService.initHtmlPage(
+    JSON.stringify(calculated)
+  );
+  await fileWritingService.forceWriteFile("index.html", html);
   return 0;
 }
 
