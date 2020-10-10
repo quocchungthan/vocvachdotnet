@@ -11,7 +11,11 @@ console.log(
 async function bootstrapping(): Promise<number> {
   await configService.loadConfigAsync(__dirname);
   const calculated = calculatingService.seperatedCalculation();
-  const input = angularHtmlElementService.build(calculated);
+  // we may have many entries in one schema
+  const input =
+    "\n" +
+    calculated.map((x) => angularHtmlElementService.build(x)).join("\n") +
+    "\n";
   const container = angularHtmlElementService.createSuperContainer(input);
   const html = angularHtmlElementService.initHtmlPage(container);
   await fileWritingService.forceWriteFile("index.html", html);
