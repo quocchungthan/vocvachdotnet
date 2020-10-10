@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "tsc --build",
+    "start": "ts-node app",
     "clean": "tsc --build --clean"
   },
   "devDependencies": {
