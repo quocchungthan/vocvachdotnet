@@ -14,7 +14,7 @@ export class EnumSelect extends Element {
     this.schema = schema;
     this.type = "select";
     this.calculating();
-    this.schema = null;
+    delete this.schema;
   }
   private calculating() {
     // find options here

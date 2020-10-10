@@ -17,7 +17,7 @@ export abstract class SuperContainerElement extends Element {
       this.name = this.getEntryInputSchema(schema);
     }
     this.calculating();
-    this.schema = null;
+    delete this.schema;
   }
 
   protected calculating(): void {
