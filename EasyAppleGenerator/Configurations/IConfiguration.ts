@@ -1,3 +1,7 @@
 export interface IConfiguration {
-    path: string;
+  path: string;
+  typechan: {
+    projectDir: string;
+    module: string;
+  };
 }

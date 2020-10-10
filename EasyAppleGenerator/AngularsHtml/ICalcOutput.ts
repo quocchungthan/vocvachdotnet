@@ -5,4 +5,5 @@ export interface ICalcOutput {
   row?: number;
   size?: number;
   offset?: number;
+  name: string;
 }
