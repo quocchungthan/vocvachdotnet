@@ -5,5 +5,6 @@ export class TextElement extends Element {
     super();
     this.type = "text";
     this.label = this.toLabel(fieldName);
+    this.size = 3;
   }
 }

@@ -13,6 +13,7 @@ export class EnumSelect extends Element {
     this.label = label;
     this.schema = schema;
     this.type = "select";
+    this.size = 3;
     this.calculating();
     delete this.schema;
   }
