@@ -37,7 +37,10 @@ class AngularGenerator implements IHtmlGenerator {
           );
           await fileWritingService.forceWriteFileWithAbsolutePath(
             htmlFile,
-            this.build(model) + this.submitButton(model.name)
+            this.createSectionElement(
+              model.name,
+              this.build(model) + this.submitButton("")
+            )
           );
           //   console.log(htmlFile);
           if (e) {
@@ -47,6 +50,16 @@ class AngularGenerator implements IHtmlGenerator {
           }
         }
       );
+    });
+  }
+
+  private createSectionElement(title: string, content: string): string {
+    return createHtmlElement({
+      name: "app-section",
+      attributes: {
+        title,
+      },
+      html: content,
     });
   }
 
