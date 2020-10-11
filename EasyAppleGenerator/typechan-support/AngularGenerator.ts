@@ -37,7 +37,7 @@ class AngularGenerator implements IHtmlGenerator {
           );
           await fileWritingService.forceWriteFileWithAbsolutePath(
             htmlFile,
-            this.build(model)
+            this.build(model) + this.submitButton(model.name)
           );
           //   console.log(htmlFile);
           if (e) {
@@ -47,6 +47,22 @@ class AngularGenerator implements IHtmlGenerator {
           }
         }
       );
+    });
+  }
+
+  private submitButton(formName) {
+    return createHtmlElement({
+      name: "div",
+      attributes: {
+        class: "pt-2 pb-2",
+      },
+      html: createHtmlElement({
+        name: "app-button",
+        attributes: {
+          label: "Submit " + formName,
+          variant: "success",
+        },
+      }),
     });
   }
 
