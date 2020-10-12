@@ -18,6 +18,7 @@ export class EnumSelect extends Element {
     delete this.schema;
   }
   private calculating() {
+    // console.log('Calculating options of ', this.name, this.getFormFieldsAsStringsByName(this.name));
     for (const f of this.getFormFieldsAsStringsByName(this.name)) {
       this.options[f] = this.toLabel(f).toLocaleLowerCase();
     }
@@ -34,6 +35,6 @@ export class EnumSelect extends Element {
       return null;
     }
 
-    return matches.split("\n").filter(this.notSpacesOnly);
+    return matches.split("\n").filter(this.notSpacesOnly).map(x => x.trim());
   }
 }

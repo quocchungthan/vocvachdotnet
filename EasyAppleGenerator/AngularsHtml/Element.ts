@@ -29,10 +29,10 @@ export abstract class Element implements ICalcOutput {
   }
 
   protected toLabel(camelName: string): string {
-    const namePattern = /([A-Z]+[a-z]*)$/g;
+    const namePattern = /([A-Z]+[a-z _0-9]*)$/g;
     let name = camelName;
     const words = [];
-
+    // console.log(camelName);
     while (name.match(/[A-Z]/)) {
       words.push(namePattern.exec(name)[1]);
       name = name.replace(namePattern, "");

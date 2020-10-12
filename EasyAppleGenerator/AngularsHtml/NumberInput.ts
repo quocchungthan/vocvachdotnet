@@ -5,5 +5,6 @@ export class NumberInput extends Element {
         super();
         this.type = "numberInput";
         this.label = this.toLabel(fieldName);
+        this.size = 2;
     }
 }

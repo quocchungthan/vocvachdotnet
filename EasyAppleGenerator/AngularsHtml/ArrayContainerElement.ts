@@ -1,6 +1,12 @@
+import { CheckBox } from "./CheckBox";
 import { ContainerElement } from "./ContainerElement";
+import { DataSelectElement } from "./DataSelect";
+import { DatePicker } from "./DatePicker";
+import { DateTimePicker } from "./DateTimePicker";
 import { EnumSelect } from "./EnumSelect";
+import { NumberInput } from "./NumberInput";
 import { SuperContainerElement } from "./SuperContainerElement";
+import { TextElement } from "./TextElement";
 
 export class ArrayContainerElement extends SuperContainerElement {
   protected seftNewArray(
@@ -31,6 +37,32 @@ export class ArrayContainerElement extends SuperContainerElement {
 
     if (this.isEnumSelection(actualName)) {
       this.innerHTML = [new EnumSelect(this.schema, actualName, this.label)];
+    }
+
+
+
+    if (actualName === "DateTime") {
+      this.innerHTML = [new DateTimePicker(this.label)];
+    }
+
+    if (actualName === "Date") {
+      this.innerHTML = [new DatePicker(this.label)];
+    }
+
+    if (actualName === "Int" || actualName === "Decimal") {
+      this.innerHTML = [new NumberInput(this.label)];
+    }
+
+    if (actualName === "Boolean") {
+      this.innerHTML = [new CheckBox(this.label)];
+    }
+
+    if (actualName === "String") {
+      this.innerHTML = [new TextElement(this.label)];
+    }
+
+    if (actualName === "ID") {
+      this.innerHTML = [new DataSelectElement(this.label)];
     }
   }
 }

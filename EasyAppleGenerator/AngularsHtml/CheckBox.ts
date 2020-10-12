@@ -5,5 +5,6 @@ export class CheckBox extends Element {
         super();
         this.type = "checkBox";
         this.label = this.toLabel(fieldName);
+        this.size = 2;
     }
 }

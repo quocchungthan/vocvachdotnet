@@ -5,5 +5,6 @@ export class DatePicker extends Element {
         super();
         this.type = "datePicker";
         this.label = this.toLabel(fieldName);
+        this.size = 2;
     }
 }

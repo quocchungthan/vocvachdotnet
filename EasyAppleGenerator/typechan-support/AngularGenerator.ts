@@ -9,6 +9,10 @@ import { ContainerElement } from "../AngularsHtml/ContainerElement";
 import { DataSelectElement } from "../AngularsHtml/DataSelect";
 import { EnumSelect } from "../AngularsHtml/EnumSelect";
 import { TextElement } from "../AngularsHtml/TextElement";
+import { DatePicker } from "../AngularsHtml/DatePicker";
+import { DateTimePicker } from "../AngularsHtml/DateTimePicker";
+import { NumberInput } from "../AngularsHtml/NumberInput";
+import { CheckBox } from "../AngularsHtml/CheckBox";
 
 export interface IHtmlGenerator {
   generateComponentAsync(model: ICalcOutput): Promise<number>;
@@ -33,7 +37,7 @@ class AngularGenerator implements IHtmlGenerator {
           const htmlFile = path.join(
             pathx,
             this.htmlPath(out) ||
-              `src/app/${module}/ui/${angularFileName}/${angularFileName}.component.html`
+            `src/app/${module}/ui/${angularFileName}/${angularFileName}.component.html`
           );
           await fileWritingService.forceWriteFileWithAbsolutePath(
             htmlFile,
@@ -44,7 +48,8 @@ class AngularGenerator implements IHtmlGenerator {
           );
           //   console.log(htmlFile);
           if (e) {
-            reject(err);
+            // reject(err);
+            resolve(1);
           } else {
             resolve(0);
           }
@@ -115,6 +120,18 @@ class AngularGenerator implements IHtmlGenerator {
     if (model instanceof DataSelectElement) {
       return this.buildDataSelectElement(model);
     }
+    if (model instanceof DatePicker) {
+      return this.buildDatePicker(model);
+    }
+    if (model instanceof DateTimePicker) {
+      return this.buildDateTimePicker(model);
+    }
+    if (model instanceof NumberInput) {
+      return this.buildNumberInput(model);
+    }
+    if (model instanceof CheckBox) {
+      return this.buildCheckBox(model);
+    }
     if (model instanceof ContainerElement) {
       return this.buildContainerElement(model);
     }
@@ -123,6 +140,30 @@ class AngularGenerator implements IHtmlGenerator {
     }
 
     return "";
+  }
+  buildCheckBox(model: CheckBox): string {
+    return "test checkbox";
+  }
+  buildNumberInput(model: NumberInput): string {
+    const wrapper = createHtmlElement({
+      name: "app-text-input",
+      attributes: {
+        label: model.label,
+      },
+    });
+    return createHtmlElement({
+      name: "div",
+      attributes: {
+        class: "col-" + model.size,
+      },
+      html: "\n" + wrapper + "\n",
+    });
+  }
+  buildDateTimePicker(model: DateTimePicker): string {
+    return "test datetime"
+  }
+  buildDatePicker(model: DatePicker): string {
+    return "test date"
   }
 
   public buildContainerElement(model: ContainerElement): string {
@@ -188,6 +229,7 @@ class AngularGenerator implements IHtmlGenerator {
         },
       }),
     });
+    // console.log(model);
     let object = this.build(model.innerHTML[0]);
 
     if (
