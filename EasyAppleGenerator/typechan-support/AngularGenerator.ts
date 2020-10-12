@@ -84,7 +84,23 @@ class AngularGenerator implements IHtmlGenerator {
     });
   }
 
-  private toDash(str: string): string {
+  public buildContainer(content: string): string {
+    return createHtmlElement({
+      name: 'div',
+      attributes: {
+        class: 'b-page-content'
+      },
+      html: createHtmlElement({
+        name: 'div',
+        attributes: {
+          class: 'container pb-5'
+        },
+        html: content
+      })
+    })
+  }
+
+  public toDash(str: string): string {
     const namePattern = /([A-Z]+[a-z]*)$/g;
     let name = str;
     const words = [];

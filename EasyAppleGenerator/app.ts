@@ -5,6 +5,7 @@ import { fileReadingService } from "./FileIO/FileReadingService";
 import { fileWritingService } from "./FileIO/FileWritingService";
 import { angularGenerator } from "./typechan-support/AngularGenerator";
 import * as path from 'path';
+import createHtmlElement = require("create-html-element");
 
 console.log(
   "\x1b[33m%s\x1b[0m",
@@ -26,6 +27,9 @@ async function bootstrapping(): Promise<number> {
   for (const m of calculated) {
     await angularGenerator.generateComponentAsync(m);
   }
+  const componentNames = calculated.map(x => 'app-' + angularGenerator.toDash(x.name)).map(x => createHtmlElement({ name: x })).join('\n');
+  await fileWritingService.forceWriteFileWithAbsolutePath(path.join(configService.Config.typechan.projectDir, configService.Config.typechan.container),
+    angularGenerator.buildContainer(componentNames));
   return 0;
 }
 

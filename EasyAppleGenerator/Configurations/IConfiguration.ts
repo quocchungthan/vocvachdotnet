@@ -3,5 +3,6 @@ export interface IConfiguration {
   typechan: {
     projectDir: string;
     module: string;
+    container: string;
   };
 }
