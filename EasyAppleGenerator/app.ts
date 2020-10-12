@@ -1,8 +1,10 @@
 import { angularHtmlElementService } from "./AngularsHtml/AngularsHtmlElementService";
 import { calculatingService } from "./AngularsHtml/CalculatingService";
 import { configService } from "./Configurations/ConfigService";
+import { fileReadingService } from "./FileIO/FileReadingService";
 import { fileWritingService } from "./FileIO/FileWritingService";
 import { angularGenerator } from "./typechan-support/AngularGenerator";
+import * as path from 'path';
 
 console.log(
   "\x1b[33m%s\x1b[0m",
@@ -10,8 +12,9 @@ console.log(
 );
 
 async function bootstrapping(): Promise<number> {
+  const schema = await fileReadingService.readFileByAbsolutePathAsync(path.join(__dirname, 'ignored/schema.graphql'));
   await configService.loadConfigAsync(__dirname);
-  const calculated = calculatingService.seperatedCalculation();
+  const calculated = calculatingService.seperatedCalculation(schema);
   // we may have many entries in one schema
   // const input =
   //   "\n" +

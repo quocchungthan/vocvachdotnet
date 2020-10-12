@@ -2,7 +2,7 @@ import { ICalcOutput } from "./ICalcOutput";
 
 export abstract class Element implements ICalcOutput {
   innerHTML?: ICalcOutput[];
-  type: "container" | "text" | "select" | "array";
+  type: "container" | "text" | "select" | "array" | "datePicker" | 'dateTimePicker' | 'checkBox' | 'numberInput';
   label?: string;
   row?: number;
   size?: number;
