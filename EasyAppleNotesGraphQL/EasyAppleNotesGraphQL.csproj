@@ -17,6 +17,8 @@
     <Folder Include="PrototypeAppleNotes\" />
     <Folder Include="PrototypeAppleNotes\Types\" />
     <Folder Include="Collector\" />
+    <Folder Include="CustomerSchemas\" />
+    <Folder Include="CustomerSchemas\Entries\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EasyAppleNotes\EasyAppleNotes.csproj">

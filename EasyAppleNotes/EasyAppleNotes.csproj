@@ -23,6 +23,7 @@
     <Folder Include="ModuleAuthorization\BusinessLayer\EasyAppleServices\" />
     <Folder Include="ModuleAuthorization\BusinessLayer\Services\" />
     <Folder Include="ModuleAuthorization\DataLayer\EasyAppleRepositories\" />
+    <Folder Include="ModuleEventScheduling\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MongoDB.Driver" Version="2.11.0" />
