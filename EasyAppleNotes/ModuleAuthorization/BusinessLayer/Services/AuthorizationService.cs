@@ -16,11 +16,15 @@ namespace EasyAppleNotes.ModuleAuthorization.BusinessLayer.Services
 
         public string UserPrincipal { get; private set; }
 
+        public string AccessToken { get; private set; }
+
         public async Task ProcessExtractingAccessTokenAsync(string accessToken)
         {
             if (string.IsNullOrEmpty(accessToken))
             {
                 UserPrincipal = null;
+                AccessToken = null;
+
                 return;
             }
 
@@ -29,10 +33,12 @@ namespace EasyAppleNotes.ModuleAuthorization.BusinessLayer.Services
                 var principal = await _auhtorization.ProcessExtractingAccessTokenAsync(accessToken);
 
                 UserPrincipal = principal;
+                AccessToken = accessToken;
             }catch(Exception e)
             {
                 Console.WriteLine(e.Message);
                 UserPrincipal = null;
+                AccessToken = null;
             }
         }
     }

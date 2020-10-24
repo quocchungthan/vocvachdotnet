@@ -8,12 +8,14 @@ using EasyAppleNotes.ModuleNotes.DataLayer.Mappers;
 using EasyAppleNotesGraphQL.Collector;
 using EasyAppleNotesGraphQL.Schemas;
 using EasyHttpClients.Auth0Client;
+using EasyHttpClients.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 // Each Customer has their own RestProject, and every other projects is common for all customer
 namespace EasyAppleNotesRestApi
@@ -39,7 +41,13 @@ namespace EasyAppleNotesRestApi
             // The Mapper profile should be in Data projects
             services.AddAutoMapper(c => c.AddProfile<MapperProfile>(), typeof(Startup));
             services.SetupDatabaseSettings(Configuration);
-            services.AddSingleton<IAuthorizationRepository, AuthorizationRepository>();
+            // requires using Microsoft.Extensions.Options
+            services.Configure<AuthClientSetting>(
+                Configuration.GetSection(nameof(AuthClientSetting)));
+            services.AddSingleton<IAuth0ClientSetting>(sp =>
+                sp.GetRequiredService<IOptions<AuthClientSetting>>().Value);
+            // must be registered after configuration
+            services.AddScoped<IAuthorizationRepository, AuthorizationRepository>();
             /**
              * End
              */

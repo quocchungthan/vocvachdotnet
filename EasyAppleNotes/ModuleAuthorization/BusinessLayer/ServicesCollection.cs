@@ -15,7 +15,8 @@ namespace EasyAppleNotes.ModuleAuthorization.BusinessLayer
         // extension method for IServiceCollection objects
         public static void AddAuthServiceDependency(this IServiceCollection services)
         {
-            services.AddSingleton<IAuthorizationService, AuthorizationService>();
+            // authorization service cannot be singleton, cause it's requiring one instance of Authorization per user request.
+            services.AddScoped<IAuthorizationService, AuthorizationService>();
         }
 
         public static void UseAuthorizationMiddleware(this IApplicationBuilder builder)
@@ -27,21 +28,18 @@ namespace EasyAppleNotes.ModuleAuthorization.BusinessLayer
     public class AuthMiddleWare
     {
         private readonly RequestDelegate _next;
-        private readonly IAuthorizationService _authorizationService;
 
         public AuthMiddleWare(
-            RequestDelegate next,
-            IAuthorizationService authorizationService
+            RequestDelegate next
         )
         {
             _next = next;
-            _authorizationService = authorizationService;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, IAuthorizationService authorizationService)
         {
             context.Request.Headers.TryGetValue(HeaderNames.Authorization, out var authorizations);
-            await _authorizationService.ProcessExtractingAccessTokenAsync(authorizations.FirstOrDefault());
+            await authorizationService.ProcessExtractingAccessTokenAsync(authorizations.FirstOrDefault());
             await _next(context);
             return;
         }
