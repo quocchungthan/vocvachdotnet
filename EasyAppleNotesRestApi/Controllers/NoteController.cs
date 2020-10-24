@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EasyAppleNotesRestApi.Controllers
 {
+    // Run run-rs --keep at /Users/chungqt/mongodb/ before using this controller
     [ApiController]
     [Route("[controller]")]
     public class NoteController: ControllerBase
