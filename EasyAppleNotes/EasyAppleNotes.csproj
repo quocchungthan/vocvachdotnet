@@ -17,6 +17,12 @@
     <Folder Include="ModuleNotes\BusinessLayer\Services\" />
     <Folder Include="ModuleNotes\DataLayer\Mappers\" />
     <Folder Include="ModuleNotes\DataLayer\EasyAppleDecorators\" />
+    <Folder Include="ModuleAuthorization\" />
+    <Folder Include="ModuleAuthorization\BusinessLayer\" />
+    <Folder Include="ModuleAuthorization\DataLayer\" />
+    <Folder Include="ModuleAuthorization\BusinessLayer\EasyAppleServices\" />
+    <Folder Include="ModuleAuthorization\BusinessLayer\Services\" />
+    <Folder Include="ModuleAuthorization\DataLayer\EasyAppleRepositories\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MongoDB.Driver" Version="2.11.0" />

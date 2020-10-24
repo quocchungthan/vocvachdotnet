@@ -12,5 +12,11 @@
     <ProjectReference Include="..\EasyAppleNotesGraphQL\EasyAppleNotesGraphQL.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\EasyEntityFramework\EasyEntityFramework.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\EasyHttpClients\EasyHttpClients.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>
