@@ -5,6 +5,7 @@ using EasyAppleNotes.ModuleEventScheduling.Models;
 
 namespace EasyAppleNotes.ModuleEventScheduling.BusinessLayer.Services
 {
+    // CQRS
     public interface IEventQueryService
     {
         Task<IEnumerable<EasyAppleEvent>> GetEvents(DateTime from, DateTime to, int take, int skip);
