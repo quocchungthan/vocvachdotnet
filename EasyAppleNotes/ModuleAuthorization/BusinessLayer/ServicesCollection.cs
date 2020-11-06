@@ -41,7 +41,6 @@ namespace EasyAppleNotes.ModuleAuthorization.BusinessLayer
             context.Request.Headers.TryGetValue(HeaderNames.Authorization, out var authorizations);
             await authorizationService.ProcessExtractingAccessTokenAsync(authorizations.FirstOrDefault());
             await _next(context);
-            return;
         }
     }
 }

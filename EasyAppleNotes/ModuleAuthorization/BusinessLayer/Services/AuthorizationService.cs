@@ -20,13 +20,8 @@ namespace EasyAppleNotes.ModuleAuthorization.BusinessLayer.Services
 
         public async Task ProcessExtractingAccessTokenAsync(string accessToken)
         {
-            if (string.IsNullOrEmpty(accessToken))
-            {
-                UserPrincipal = null;
-                AccessToken = null;
-
-                return;
-            }
+            UserPrincipal = null;
+            AccessToken = null;
 
             try
             {
@@ -37,8 +32,6 @@ namespace EasyAppleNotes.ModuleAuthorization.BusinessLayer.Services
             }catch(Exception e)
             {
                 Console.WriteLine(e.Message);
-                UserPrincipal = null;
-                AccessToken = null;
             }
         }
     }
