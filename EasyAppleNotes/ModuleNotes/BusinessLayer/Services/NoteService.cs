@@ -20,5 +20,10 @@ namespace EasyAppleNotes.ModuleNotes.BusinessLayer.Services
         {
             return _noteRepository.GetAllNotesOrderByIssueDayThenCreatedAtThenOrderIndex();
         }
+
+        public Task<string> StoreNote(Note note)
+        {
+            return _noteRepository.Store(note);
+        }
     }
 }

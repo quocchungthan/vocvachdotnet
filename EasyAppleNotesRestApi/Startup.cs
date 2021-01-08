@@ -33,7 +33,6 @@ namespace EasyAppleNotesRestApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.CollectQuery();
 
             /**
              * Integerate httpClient & EF dependencies
@@ -54,6 +53,9 @@ namespace EasyAppleNotesRestApi
             services.AddRepositoryDependency();
             services.AddAuthServiceDependency();
             services.AddServiceDependency();
+
+            // endpoints should be call at the last
+            services.CollectQuery();
 
             // -- Workaround: temperary allow SynchronousIO
             // kestrel

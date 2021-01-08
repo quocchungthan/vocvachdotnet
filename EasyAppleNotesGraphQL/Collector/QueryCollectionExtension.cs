@@ -1,4 +1,5 @@
 ﻿using System;
+using EasyAppleNotesGraphQL.PrototypeAppleNotes.Mutations;
 using EasyAppleNotesGraphQL.PrototypeAppleNotes.Types;
 using EasyAppleNotesGraphQL.Schemas;
 using EasyAppleNotesGraphQL.Types;
@@ -20,6 +21,7 @@ namespace EasyAppleNotesGraphQL.Collector
             // Transient - create new instance whenever the type was invoked
             services.AddTransient<NoteType>();
             services.AddTransient<SearchNoteType>();
+            services.AddTransient<NotesMutation>();
             services.AddTransient<EasyAppleNotesSchema>();
         }
     }

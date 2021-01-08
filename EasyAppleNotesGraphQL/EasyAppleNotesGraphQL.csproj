@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <Folder Include="Schemas\" />
-    <Folder Include="PrototypeAppleNotes\" />
     <Folder Include="PrototypeAppleNotes\Types\" />
     <Folder Include="Collector\" />
     <Folder Include="CustomerSchemas\" />

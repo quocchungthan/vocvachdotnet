@@ -10,7 +10,7 @@ namespace EasyAppleNotes.ModuleNotes.BusinessLayer
         // extension method for IServiceCollection objects
         public static void AddServiceDependency(this IServiceCollection services)
         {
-            services.AddScoped<INoteService, NoteService>();
+            services.AddSingleton<INoteService, NoteService>();
         }
     }
 }

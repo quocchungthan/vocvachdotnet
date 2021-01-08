@@ -18,7 +18,9 @@ namespace EasyEntityFramework.EFDbContext.EFTutorial
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlite("Data Source=blogging.db");
+            //AA
+            //options.usesq
+            //options.UseSqlite("Data Source=blogging.db");
         }
     }
 }

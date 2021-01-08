@@ -8,5 +8,6 @@ namespace EasyAppleNotes.ModuleNotes.DataLayer.EasyAppleRepositories
     public interface INoteRepository
     {
         Task<IEnumerable<Note>> GetAllNotesOrderByIssueDayThenCreatedAtThenOrderIndex();
+        Task<string> Store<Note>(Note note);
     }
 }

@@ -15,7 +15,7 @@ namespace EasyAppleNotes.ModuleNotes.DataLayer
             // Add scoped: one instance for one scoped - multiple call
             // Add singleton: one instance for whole process
             // Add transient: one instance for one injection
-            repo.AddScoped<INoteRepository, NoteRepository>();
+            repo.AddSingleton<INoteRepository, NoteRepository>();
         }
 
         public static void SetupDatabaseSettings(this IServiceCollection services, IConfiguration config)

@@ -8,5 +8,6 @@ namespace EasyAppleNotes.ModuleNotes.BusinessLayer.EasyAppleServices
     public interface INoteService
     {
         Task<IEnumerable<Note>> GetNotes();
+        Task<string> StoreNote(Note note);
     }
 }
