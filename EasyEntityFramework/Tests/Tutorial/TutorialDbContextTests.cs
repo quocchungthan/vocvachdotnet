@@ -19,7 +19,8 @@ namespace EasyEntityFramework.Tests.Tutorial
         [Fact]
         public void CRUD()
         {
-            var builder = new DbContextOptionsBuilder<EFTutorialDbContext>().UseSqlite("Data Source=blogging_IT_test" + Guid.NewGuid().ToString() + ".db");
+            var builder = new DbContextOptionsBuilder<EFTutorialDbContext>()
+                .UseSqlServer($"Server=192.168.79.157,2022;Database=educasep{ '_' + Guid.NewGuid().ToString() };User Id=sa;Password=Pass@word;");
             using (var db = new EFTutorialDbContext(builder.Options))
             {
                 db.Database.Migrate();

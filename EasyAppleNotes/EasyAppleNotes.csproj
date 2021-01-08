@@ -35,4 +35,7 @@
     <PackageReference Include="MongoDB.Driver" Version="2.11.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EasyEntityFramework\EasyEntityFramework.csproj" />
+  </ItemGroup>
 </Project>

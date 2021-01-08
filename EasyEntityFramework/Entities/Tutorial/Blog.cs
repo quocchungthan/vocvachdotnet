@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EasyEntityFramework.Entities.Tutorial
 {
-    class Blog
+    public class Blog
     {
         public Guid Id { get; set; }
         public string Url { get; set; }
