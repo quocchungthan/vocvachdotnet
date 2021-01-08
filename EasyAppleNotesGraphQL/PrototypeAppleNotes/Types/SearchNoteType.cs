@@ -1,4 +1,5 @@
 ﻿using System;
+using EasyAppleNotes.ModuleNotes.BusinessLayer.EasyAppleServices;
 using EasyAppleNotes.ModuleNotes.EasyAppleCommonModel;
 using EasyAppleNotesGraphQL.Types;
 using GraphQL;
@@ -8,7 +9,7 @@ namespace EasyAppleNotesGraphQL.PrototypeAppleNotes.Types
 {
     public class SearchNoteType: ObjectGraphType
     {
-        public SearchNoteType()
+        public SearchNoteType(INoteService noteService)
         {
             Name = nameof(SearchNoteType);
             Field<NoteType>(
@@ -27,6 +28,16 @@ namespace EasyAppleNotesGraphQL.PrototypeAppleNotes.Types
               },
               description: "Description should be define clearly including example"
             );
+
+            Field<ListGraphType<NoteType>>(
+              "notes",
+              resolve: context =>
+              {
+                  return noteService.GetNotes();
+              },
+              description: "Description should be define clearly including example"
+            );
+
         }
     }
 }

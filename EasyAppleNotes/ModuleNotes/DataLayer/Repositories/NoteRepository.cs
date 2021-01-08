@@ -8,6 +8,7 @@ using MongoDB.Driver;
 using System.Linq;
 using Tag = EasyAppleNotes.ModuleNotes.EasyAppleCommonModel.Tag;
 using AutoMapper;
+using MongoDB.Bson;
 
 namespace EasyAppleNotes.ModuleNotes.DataLayer.Repositories
 {
@@ -34,7 +35,7 @@ namespace EasyAppleNotes.ModuleNotes.DataLayer.Repositories
                     .SortBy(note => note.OrderIndex)
                     .ToListAsync();
 
-            var tagIds = result.Select(note => note.TagIds)
+            var tagIds = result.Select(note => note.TagIds ?? (new ObjectId[] { }.AsEnumerable()))
                     .SelectMany(x => x)
                     .Select(x => x.ToString());
 
@@ -52,7 +53,7 @@ namespace EasyAppleNotes.ModuleNotes.DataLayer.Repositories
             {
                 var note = _mapper.Map<Note>(x);
 
-                note.Tags = x.TagIds.Select(y => tagModels.First(z => y.ToString() == z.Id));
+                note.Tags = x.TagIds?.Select(y => tagModels.First(z => y.ToString() == z.Id));
 
                 return note;
             });
